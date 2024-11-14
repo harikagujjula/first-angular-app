@@ -9,7 +9,9 @@ import { Component, Input } from '@angular/core';
 })
 export class UserComponent {
   @Input() avatar!: string;
-  @Input() name!: string;
+  // Setting the Name as Required so that if name is missing for any component,
+  // an error is shown at a prior stage.
+  @Input({ required: true}) name!: string;
 
   get imagePath() {
     return 'users/' + this.avatar;
