@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,14 +8,13 @@ import { Component, Input } from '@angular/core';
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  @Input() avatar!: string;
-  // Setting the Name as Required so that if name is missing for any component,
-  // an error is shown at a prior stage.
-  @Input({ required: true}) name!: string;
+  avatar = input<string>();
+  // Defining name Input signal as required.
+  name = input.required<string>();
 
-  get imagePath() {
-    return 'users/' + this.avatar;
-  }
+  imagePath = computed(() => {
+    return 'users/' + this.avatar()
+  });
 
   onSelectUser() {
   }
