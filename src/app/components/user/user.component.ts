@@ -1,4 +1,4 @@
-import { Component, computed, input, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,14 +8,18 @@ import { Component, computed, input, Input } from '@angular/core';
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  avatar = input<string>();
-  // Defining name Input signal as required.
-  name = input.required<string>();
+  @Input() id!: string;
+  @Input() avatar!: string;
+  // Setting the Name as Required so that if name is missing for any component,
+  // an error is shown at a prior stage.
+  @Input({ required: true}) name!: string;
+  @Output() select = new EventEmitter();
 
-  imagePath = computed(() => {
-    return 'users/' + this.avatar()
-  });
+  get imagePath() {
+    return 'users/' + this.avatar;
+  }
 
   onSelectUser() {
+    this.select.emit(this.id);
   }
 }
